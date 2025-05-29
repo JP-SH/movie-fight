@@ -6,6 +6,23 @@
 // To do this we can use a hook function which mocha provides which is below.
 // This code is ececuted for every following if statement
 
+const waitFor = (selector) => {
+  return new Promise((resolve, reject) => {
+    const interval = setInterval(() => {
+      if (document.querySelector(selector)) {
+        clearInterval(interval);
+        clearTimeout(timeout);
+        resolve();
+      }
+    }, 30);
+
+    const timeout = setTimeout(() => {
+      clearInterval(interval);
+      reject();
+    }, 2000);
+  });
+};
+
 beforeEach(() => {
   document.querySelector('#target').innerHTML = '';
   createAutoComplete({
