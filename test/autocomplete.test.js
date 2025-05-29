@@ -47,9 +47,13 @@ it('Dropdown starts closed', () => {
   expect(dropdown.className).not.to.include('is-active');
 });
 
-it('After searching, dropwdown opens up', () => {
+it('After searching, dropwdown opens up', async () => {
   const input = document.querySelector('input');
   input.value = 'avengers';
   input.dispatchEvent(new Event('input'));
   // we had to have an value in the input for the dropdown to come down so we can test if the dropdown worked. 'DispatchEvent' is a fake DOM event that makes the browser think an actual event has occured and therefore triggers the search
+  await waitFor('.dropdown-item');
+
+  const dropdown = document.querySelector('.dropdown');
+  expect(dropdown.className).to.include('is-active');
 });
